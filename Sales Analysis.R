@@ -3,8 +3,6 @@ library(tidyr)
 library(ggplot2)
 library(lubridate)
 library(stringr)
-
-#part 1 Data sorting and cleaning
 sales <- read.csv("~/2022 SCHOOL/FALL 2022/Sales2022.csv")
 
 sales <- select(sales, -c(Balance,Last.Name,Phone.No., Credit.Balance,
@@ -17,9 +15,10 @@ sales$Initial.Date <- mdy(sales$Initial.Date)
 
 cols <- c("Customer.Status","Sales.Status", "Autopay","Contract.Name")
 sales[cols] <- lapply(sales[cols],factor)
+head(sales)
 
 
-#Part 2 Data Visualization
+#Data Visualization
 #total sales by month
 sales %>%
   filter(Customer.Status == "Active") %>%
@@ -43,16 +42,40 @@ sales %>%
   
 
 
-month(sales$Account.Start.Date)
-days <- weekdays(sales$Account.Start.Date)
 
-for(i in 1:length(days)){
-  if(str_detect(days[i], "Satuday") == TRUE){
-  print("yessir")
+#creating a function to detect if the input city address
+cityDetect <- function(x){
+  count <- 0
+  for (i in 1:length(sales$Address)) {
+    
+    if(str_detect(sales$Address[i], x) == TRUE){
+    count <- count + 1
+    }
   }
+  count
 }
+
+EagleSales <- cityDetect("Eagle Mountain")
+LehiSales <- cityDetect("Lehi")
+DraperSales <- cityDetect("Draper")
+SaratogaSales <- cityDetect("Saratoga")
+
+
+EagleSales <- NA
+citySales <- sales %>%
+  filter(Customer.Status == "Active") %>%
+  for (i in 1:nrow(Address)){
+    if(str_detect(Address[i]) == "Eagle Mountain"){
+      EagleSales <- EagleSales + 1
+    }
+  }
+
+
+
 #City sales
 sales %>%
+  filter(Customer.Status == "Active") %>%
+  ggplot(aes(x = ))
   str_detect()
 head(sales)
 
