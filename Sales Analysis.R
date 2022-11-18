@@ -3,6 +3,8 @@ library(tidyr)
 library(ggplot2)
 library(lubridate)
 library(stringr)
+
+#part 1 Data sorting and cleaning
 sales <- read.csv("~/2022 SCHOOL/FALL 2022/Sales2022.csv")
 
 sales <- select(sales, -c(Balance,Last.Name,Phone.No., Credit.Balance,
@@ -17,7 +19,7 @@ cols <- c("Customer.Status","Sales.Status", "Autopay","Contract.Name")
 sales[cols] <- lapply(sales[cols],factor)
 
 
-#Data Visualization
+#Part 2 Data Visualization
 #total sales by month
 sales %>%
   filter(Customer.Status == "Active") %>%
